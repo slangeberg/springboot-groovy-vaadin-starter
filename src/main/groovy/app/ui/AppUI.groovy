@@ -1,5 +1,6 @@
 package app.ui
 
+import app.service.TimeService
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.Widgetset
 import com.vaadin.server.VaadinRequest
@@ -8,14 +9,15 @@ import com.vaadin.ui.Button
 import com.vaadin.ui.Label
 import com.vaadin.ui.UI
 import com.vaadin.ui.themes.ValoTheme
+import org.springframework.beans.factory.annotation.Autowired
 import org.vaadin.viritin.layouts.MVerticalLayout
-
-import java.time.Instant
 
 @SpringUI
 @Theme('app')
 @Widgetset('app')
 class AppUI extends UI {
+
+    @Autowired TimeService timeService
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -30,10 +32,9 @@ class AppUI extends UI {
         // layout.addComponent(editor)
 
         layout.addComponents(new Button('Click for time', {
-            layout.addComponent(new Label("The time on server is ${Instant.now()}"))
+            layout.addComponent(new Label("The service time?: ${timeService.getCurrentTime()}"))
         } as Button.ClickListener))
 
         setContent(layout)
     }
-
 }
